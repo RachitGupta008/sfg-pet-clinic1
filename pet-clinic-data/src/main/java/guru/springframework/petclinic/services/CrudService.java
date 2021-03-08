@@ -12,7 +12,7 @@ public interface CrudService<T, ID> {
 
     Set<T> findAll();
 
-    T delete(T type);
+    void delete(T type);
 
-    T deleteById(ID id);
+    void deleteById(ID id);
 }
