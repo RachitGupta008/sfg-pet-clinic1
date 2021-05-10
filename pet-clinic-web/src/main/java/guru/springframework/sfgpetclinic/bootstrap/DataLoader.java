@@ -16,19 +16,21 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
 
 
-    public DataLoader() {
-        petService = new PetMapService();
-        vetService = new VetMapService();
+    public DataLoader(PetService petService, VetService vetService) {
+        this.petService = petService;
+        this.vetService = vetService;
     }
 
     @Override
     public void run(String... args) throws Exception {
         Pet pet = new Pet();
         pet.setId(01L);
+        petService.save(pet);
         System.out.println("Loading Pet Data.....");
 
         Vet vet = new Vet();
         pet.setId(01L);
+        vetService.save(vet);
         System.out.println("Loading Vet Data.....");
     }
 }
