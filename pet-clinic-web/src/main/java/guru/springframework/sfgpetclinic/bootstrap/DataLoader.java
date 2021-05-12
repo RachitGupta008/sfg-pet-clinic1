@@ -31,7 +31,7 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loading Pet Data.....");
 
         Vet vet = new Vet();
-        pet.setId(01L);
+        vet.setId(01L);
         vetService.save(vet);
         System.out.println("Loading Vet Data.....");
 
