@@ -1,13 +1,15 @@
 package guru.springframework.petclinic.services.map;
 
+import guru.springframework.petclinic.model.BaseEntity;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class AbstractMapService<T, ID> {
+public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
 
-    Map<ID, T> map = new HashMap<>();
+    protected Map<Long, T> map = new HashMap<>();
 
     T findById(ID id){
         return map.get(id);
@@ -17,8 +19,18 @@ public abstract class AbstractMapService<T, ID> {
     return new HashSet<>(map.values());
     }
 
-    T save(ID id, T object){
-        map.put(id, object);
+    T save( T object) {
+
+        if (object != null) {
+            if (object.getId() == null) {
+                object.setId(generateId());
+            }
+
+
+        map.put(object.getId(), object);
+    }else{
+            throw new RuntimeException("Object is null");
+        }
         return object;
     }
 
@@ -28,6 +40,12 @@ public abstract class AbstractMapService<T, ID> {
 
     void deleteById(ID id){
         map.remove(id);
+    }
+
+    private Long generateId(){
+
+        return Long.valueOf(map.size()+1);
+
     }
 
 }
