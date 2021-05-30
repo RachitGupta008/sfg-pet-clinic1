@@ -25,4 +25,9 @@ public class OnwerController {
         model.addAttribute("owners", onwerService.findAll());
         return "owners/index";
     }
+
+    @RequestMapping({"/find"})
+    public String find(){
+        return "notimplemented";
+    }
 }
