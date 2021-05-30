@@ -11,6 +11,8 @@ import guru.springframework.petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -45,11 +47,20 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet);
         System.out.println("Loading Vet Data.....");
 
+
+
         Owner owner = new Owner();
 
         owner.setFirstName("Hello");
         owner.setLastName("World");
         onwerService.save(owner);
+
+        Pet catty  = new Pet();
+        catty.setPetType(petType);
+        catty.setOwner(owner);
+        catty.setBirthDate(LocalDate.now());
+        petService.save(catty);
+
 
     }
 }
