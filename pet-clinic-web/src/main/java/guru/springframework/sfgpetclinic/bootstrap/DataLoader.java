@@ -1,13 +1,7 @@
 package guru.springframework.sfgpetclinic.bootstrap;
 
-import guru.springframework.petclinic.model.Owner;
-import guru.springframework.petclinic.model.Pet;
-import guru.springframework.petclinic.model.PetType;
-import guru.springframework.petclinic.model.Vet;
-import guru.springframework.petclinic.services.OnwerService;
-import guru.springframework.petclinic.services.PetService;
-import guru.springframework.petclinic.services.PetTypeService;
-import guru.springframework.petclinic.services.VetService;
+import guru.springframework.petclinic.model.*;
+import guru.springframework.petclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -20,17 +14,34 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final OnwerService onwerService;
     private final PetTypeService petTypeService;
+    private  final SpecialitiesService specialitiesService;
 
-
-    public DataLoader(PetService petService, VetService vetService, OnwerService onwerService, PetTypeService petTypeService) {
+    public DataLoader(PetService petService, VetService vetService, OnwerService onwerService, PetTypeService petTypeService, SpecialitiesService specialitiesService) {
         this.petService = petService;
         this.vetService = vetService;
         this.onwerService = onwerService;
         this.petTypeService = petTypeService;
+        this.specialitiesService = specialitiesService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        if(petService.findAll().size()==0){
+
+            loadData();
+        }
+
+
+
+
+    }
+
+    private void loadData() {
+        Speciality radioLoSpeciality = new Speciality();
+        radioLoSpeciality.setDesciption("Radio");
+        specialitiesService.save(radioLoSpeciality);
+
+
         PetType petType = new PetType();
         petType.setName("Dog");
         petTypeService.save(petType);
@@ -43,10 +54,10 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loading Pet Data.....");
 
         Vet vet = new Vet();
+        vet.getSpecialities().add(radioLoSpeciality);
 
         vetService.save(vet);
         System.out.println("Loading Vet Data.....");
-
 
 
         Owner owner = new Owner();
@@ -60,7 +71,5 @@ public class DataLoader implements CommandLineRunner {
         catty.setOwner(owner);
         catty.setBirthDate(LocalDate.now());
         petService.save(catty);
-
-
     }
 }
