@@ -1,6 +1,5 @@
 package guru.springframework.petclinic.model;
 
-import jdk.vm.ci.meta.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
