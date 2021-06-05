@@ -2,7 +2,7 @@ package guru.springframework.petclinic.services.springdatajpa;
 
 import guru.springframework.petclinic.model.Owner;
 import guru.springframework.petclinic.repositories.OwnerRepository;
-import guru.springframework.petclinic.services.OnwerService;
+import guru.springframework.petclinic.services.OwnerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Service
 @Profile("springdatajpa")
-public class OwnerServiceDataJpaService implements OnwerService {
+public class OwnerServiceDataJpaService implements OwnerService {
 
     private final OwnerRepository ownerRepository;
 
