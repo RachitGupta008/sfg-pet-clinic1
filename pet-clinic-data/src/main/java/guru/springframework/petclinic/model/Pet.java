@@ -4,6 +4,8 @@ import jdk.vm.ci.meta.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pets")
@@ -22,6 +24,9 @@ public class Pet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private PetType petType;
+
+    @OneToMany(mappedBy = "pet")
+    private Set<Visit> visits = new HashSet<>();
 
     public Owner getOwner() {
         return owner;
