@@ -28,6 +28,7 @@ public class OnwerController {
 
     @RequestMapping({"/find"})
     public String find(){
+        int [] arr = new int[10];
         return "notimplemented";
     }
 }
