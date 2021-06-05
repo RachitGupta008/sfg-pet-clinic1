@@ -12,10 +12,10 @@ import java.util.Set;
 
 @Service
 @Profile("springdatajpa")
-public class VetServiceDataJpa implements VetService {
+public class VetServiceDataJpaService implements VetService {
     private final VetRepository vetRepository;
 
-    public VetServiceDataJpa(VetRepository vetRepository) {
+    public VetServiceDataJpaService(VetRepository vetRepository) {
         this.vetRepository = vetRepository;
     }
 
