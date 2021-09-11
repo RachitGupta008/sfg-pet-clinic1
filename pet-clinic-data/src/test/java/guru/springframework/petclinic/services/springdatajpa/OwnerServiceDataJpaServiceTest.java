@@ -20,6 +20,7 @@ class OwnerServiceDataJpaServiceTest {
 
     @InjectMocks
     OwnerServiceDataJpaService ownerServiceDataJpaService;
+
     @BeforeEach
     void setUp() {
     }
