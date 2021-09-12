@@ -7,9 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -21,6 +24,43 @@ public class OnwerController {
 
     public OnwerController(OwnerService ownerService) {
         this.ownerService = ownerService;
+    }
+
+    private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
+
+    @GetMapping("/new")
+    public String initCreationForm(Model model) {
+        Owner owner = new Owner();
+        model.addAttribute("owner", owner);
+        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping("/new")
+    public String processCreationForm(@Valid Owner owner, BindingResult result) {
+        if (result.hasErrors()) {
+            return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+        } else {
+            ownerService.save(owner);
+            return "redirect:/owners/" + owner.getId();
+        }
+    }
+
+    @GetMapping("/{ownerId}/edit")
+    public String initUpdateOwnerForm(@PathVariable("ownerId") Long ownerId, Model model) {
+        Owner owner = ownerService.findByID(ownerId);
+        model.addAttribute(owner);
+        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping("/{ownerId}/edit")
+    public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") Long ownerId) {
+        if (result.hasErrors()) {
+            return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+        } else {
+            owner.setId(ownerId);
+            ownerService.save(owner);
+            return "redirect:/owners/{ownerId}";
+        }
     }
 
     @GetMapping("/find")
